@@ -15,7 +15,7 @@ class SeleniumClient:
 
         options = webdriver.ChromeOptions()
         if is_hide:
-            options.add_argument("headless")  # 창 숨기기
+            # options.add_argument("headless")  # 창 숨기기
             options.add_argument("no-sandbox")
             options.add_argument(
                 "user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")  # for google 로그인 화면
@@ -73,6 +73,12 @@ class SeleniumClient:
 
         resp = self.driver.page_source
         soup = BeautifulSoup(resp, 'html.parser')
+        
+        # with open("../code_window.html", "w", encoding="utf-8") as f:
+        #     f.write(soup.prettify())
+        #     print(soup.prettify())
+        #     print("읽기 완료")
+        # raise Exception("뒤에 코드 하기 싫어 오류 냄")
 
         code = soup.script.text.split('code=')[1].split('&state')[0]
 
