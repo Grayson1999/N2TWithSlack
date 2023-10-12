@@ -77,7 +77,9 @@ class Notion2Tistory:
                 if page[-1] != None:
                     upload_pages.append(page)
         
-        for i, page in enumerate(upload_pages):
+        self.pages = upload_pages
+        
+        for i, page in enumerate(self.pages):
             # download html page
             self.export_page(page)
             # print(f'[진행중] {i + 1}번째 페이지 다운로드 완료...')
