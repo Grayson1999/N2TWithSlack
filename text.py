@@ -1,10 +1,6 @@
-from selenium import webdriver
-from time import sleep
-from bs4 import BeautifulSoup
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-driver = webdriver.Chrome(ChromeDriverManager().install())
-
-driver.get("https://www.tistory.com/oauth/authorize?client_id=e674d81d586e2169a896eb7680164c6e&redirect_uri=http://comgong-stone.tistory.com&response_type=code")
-
-input()
+# ChromeDriverManager를 사용하여 ChromeDriver 설치
+service = Service(ChromeDriverManager().install())
+service.log_path = "/home/grayson_p/N2TWithSlack/chromedriver.log"
