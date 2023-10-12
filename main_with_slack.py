@@ -66,7 +66,18 @@ class Notion2Tistory:
         self.s_client.quit()
 
     def posts(self):
-        for i, page in enumerate(self.pages):
+        # 업로드 할 page 추출   | 수정 요청 페이지 or 기존 페이지 중 업로드 예정일이 가장 최근인 페이지 1개
+        upload_pages = list()
+        count = 0
+        for page in self.pages:
+            if count < 1:
+                upload_pages.append(page)
+                count+=1
+            else:
+                if page[-1] != None:
+                    upload_pages.append(page)
+        
+        for i, page in enumerate(upload_pages):
             # download html page
             self.export_page(page)
             # print(f'[진행중] {i + 1}번째 페이지 다운로드 완료...')
@@ -81,8 +92,29 @@ class Notion2Tistory:
             # 업로드한 페이지의 파일 삭제
             delete_file(page_path)
             # print(f'\t[진행중] 페이지 파일 삭제완료! [{page_path}]')
-
+            
         return self.pages
+        
+        
+        # for i, page in enumerate(self.pages):
+        #     # download html page
+        #     self.export_page(page)
+        #     print(f'[진행중] {i + 1}번째 페이지 다운로드 완료...')
+
+        #     # get downloaded file path
+        #     download_dir = os.path.expanduser(self.cfg.NOTION.DOWNLOAD_DIR)
+        #     page_path = get_html_path(download_dir)
+
+        #     # parsing html to notion style page, post tistory
+        #     self.parse_and_post(page, page_path)
+
+        #     # 업로드한 페이지의 파일 삭제
+        #     delete_file(page_path)
+        #     # print(f'\t[진행중] 페이지 파일 삭제완료! [{page_path}]')
+            
+        #     raise Exception("뒤에 버리기 위해")
+
+        # return self.pages
 
     def export_page(self, page):
         page_id = page[0].id
